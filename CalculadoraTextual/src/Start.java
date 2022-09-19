@@ -53,7 +53,8 @@ public class Start {
 	 */
 		switch(option) {
 		    case 0: // SALIR
-		    	System.out.println("Adiós! ");
+		    	System.out.println("El programa ha finalizado");
+		    	System.exit(0);
 		    	break;
 			case 1: // SUMAR
 				
@@ -89,7 +90,12 @@ public class Start {
 				cleanConsole();
 				break;
 			case 5: // MAYOR DE 3 NUMEROS
-				System.out.println("A calcular número mayor! ");
+				//System.out.println("A calcular número mayor! ");
+				a = captureNumber("primer", "evaluar");
+				b = captureNumber("segundo", "evaluar");
+				c = captureNumber("tercer", "evaluar");
+				resultado = evaluaNumeroMayor(a, b, c);
+				getResult("mayorde3", resultado);
 				cleanConsole();
 				break;
 			case 6: // CAPICUA
@@ -97,7 +103,9 @@ public class Start {
 				cleanConsole();
 				break;
 			default: // OTRO 
-				System.err.println("Error :: Ha introducido una opción inválida.");
+				System.err.println("Error :: Opción errónea.");
+				capturaDatos.nextLine();
+				cleanConsole();
 				break;
 		}
 
@@ -121,10 +129,10 @@ public class Start {
 		if (operation == "mayorde3") {
 			System.out.println("El número "+ res +" es el mayor de los 3 números\n");
 			capturaDatos.nextLine();
+		} else {
+			System.out.println(" La "+ operation +" de "+ a.toString() +" y "+ b.toString() + " es: "+ res.toString()+"\n");
+			capturaDatos.nextLine();
 		}
-		
-		System.out.println(" La "+ operation +" de "+ a.toString() +" y "+ b.toString() + " es: "+ res.toString()+"\n");
-		capturaDatos.nextLine();
 	}
 	
 	public static Float suma(Float x, Float y) {
@@ -154,17 +162,27 @@ public class Start {
 	 * Método para dividir
 	 */
 		if (y == 0) {
-			System.err.print("Error :: división por 0");
-			System.exit(1);
+			System.err.print("Error :: división por 0\n");
+			capturaDatos.nextLine();
+			cleanConsole();
 		} 
 		
 		return x / y;
 	}
 	
-	public static void evaluaNumeroMayor(Float x,Float y,Float z) {
+	public static Float evaluaNumeroMayor(Float x,Float y,Float z) {
 	/*
 	 * Método para evaluar el mayor de tres números
 	 */
+		if (x > y && x > z) {
+			return x;
+		} else if (y > x && y > z) {
+			return y;
+		} else if (z > x && z > y) {
+			return z;
+		}
+		
+		return 0.0f;
 	}
 	
 	public static void capicua(int n) {
