@@ -5,6 +5,8 @@ public class Start {
     
 	protected static Scanner capturaDatos = new Scanner(System.in); 
 	protected static int option;
+	protected static Float a,b,c;
+	protected static Float resultado;
 	
     public static void main(String[] args) {
 	/*
@@ -50,7 +52,8 @@ public class Start {
 	 * Método para dividir
 	 */
 		if (y == 0) {
-			System.err.print("Error :: division por 0 es inválida");
+			System.err.print("Error :: división por 0");
+			System.exit(1);
 		} 
 		
 		return x / y;
@@ -103,19 +106,35 @@ public class Start {
 		switch(option) {
 		    case 0: // SALIR
 		    	System.out.println("Adiós! ");
-		    	System.out.flush();
 		    	break;
 			case 1: // SUMAR
-				System.out.println("A sumar! ");
+				
+				//System.out.println("A sumar! ");
+				a = captureNumber("primer", "sumar");
+				b = captureNumber("segundo", "sumar");
+				resultado = suma(a, b);
+				getResult("suma", resultado);
 				break;
 			case 2: // RESTAR
-				System.out.println("A restar! ");
+				//System.out.println("A restar! ");
+				a = captureNumber("primer", "restar");
+				b = captureNumber("segundo", "restar");
+				resultado = resta(a, b);
+				getResult("resta", resultado);
 				break;
 			case 3: // MULTIPLICAR
-				System.out.println("A multiplicar! ");
+				//System.out.println("A multiplicar! ");
+				a = captureNumber("primer", "multiplicar");
+				b = captureNumber("segundo", "multiplicar");
+				resultado = multiplica(a, b);
+				getResult("multiplicación", resultado);
 				break;
 			case 4: // DIVIDIR
-				System.out.println("A dividir! ");
+				//System.out.println("A dividir! ");
+				a = captureNumber("primer", "dividir");
+				b = captureNumber("segundo", "dividir");
+				resultado = divide(a, b);
+				getResult("división", resultado);
 				break;
 			case 5: // MAYOR DE 3 NUMEROS
 				System.out.println("A calcular número mayor! ");
@@ -128,6 +147,22 @@ public class Start {
 				break;
 		}
 
+	}
+	
+	public static Float captureNumber(String chance, String operation) {
+		Float number;
+		System.out.print("Introduzca el "+ chance +" número flotante a "+ operation +": ");
+		number = capturaDatos.nextFloat();
+		return number;
+	}
+	
+	public static void getResult(String operation, Float res) {
+		if (operation == "mayorde3") {
+			System.out.println("El número "+ res +" es el mayor de los 3 números");
+		}
+		
+		System.out.println(" La "+ operation +" de "+ a.toString() +" y "+ b.toString() + " es: "+ res.toString());
+		
 	}
 
 }
