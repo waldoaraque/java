@@ -36,17 +36,24 @@ public class Start {
 	/*
 	 * 
 	 */
-		System.out.println("Introduzca una opción del menú:   ");
-		System.out.println("     1. Sumar                     ");
-		System.out.println("     2. Restar                    ");
-		System.out.println("     3. Multiplicar               ");
-		System.out.println("     4. Dividir                   ");
-		System.out.println("     5. Número mayor de 3 números ");
-		System.out.println("     6. Capicua                   ");
-		System.out.println("     0. Salir                    \n");
+		try {
+			System.out.println("Introduzca una opción del menú:   ");
+			System.out.println("     1. Sumar                     ");
+			System.out.println("     2. Restar                    ");
+			System.out.println("     3. Multiplicar               ");
+			System.out.println("     4. Dividir                   ");
+			System.out.println("     5. Número mayor de 3 números ");
+			System.out.println("     6. Capicua                   ");
+			System.out.println("     0. Salir                    \n");
+			
+			System.out.print("Introduzca una opción: ");
+			option = capturaDatos.nextInt();
+		} catch(Exception e) {
+			System.err.println("Error :: Opción errónea");
+			capturaDatos.nextLine();
+			cleanConsole();
+		}
 		
-		System.out.print("Introduzca una opción: ");
-		option = capturaDatos.nextInt();
 	}
 	
 	public static void handler() {
@@ -108,7 +115,7 @@ public class Start {
 				cleanConsole();
 				break;
 			default: // OTRO 
-				System.err.println("Error :: Opción errónea.");
+				System.err.println("Error :: Opción errónea");
 				capturaDatos.nextLine();
 				cleanConsole();
 				break;
@@ -124,20 +131,32 @@ public class Start {
 	}
 	
 	public static Float captureNumber(String chance, String operation) {
-		Float number;
+		Float number = 0f;
+		try {
+			System.out.print("Introduzca el "+ chance +" número flotante a "+ operation +": ");
+			number = capturaDatos.nextFloat();
+		} catch (Exception e) {
+			System.err.println("Error :: no se han capturado los datos esperados");
+			capturaDatos.nextLine();
+			cleanConsole();
+		}
 		
-		System.out.print("Introduzca el "+ chance +" número flotante a "+ operation +": ");
-		number = capturaDatos.nextFloat();
 
 		return number;
 	}
 	
 	public static String captureCapicua() {
-		String number;
+		String number = "";
 		
-		System.out.print("Introduzca un número para saber si es capicúa: ");
-		number = capturaDatos.next();
-
+		try {
+			System.out.print("Introduzca un número para saber si es capicúa: ");
+			number = capturaDatos.next("[0-9]+"); // [0-9]+ patrón de regEx(solo números)
+		} catch (Exception e) {
+			System.err.println("Error :: no se han capturado los datos esperados");
+			capturaDatos.nextLine();
+			cleanConsole();
+		}
+		
 		return number;
 	}
 	
@@ -186,7 +205,7 @@ public class Start {
 	 * Método para dividir
 	 */
 		if (y == 0) {
-			System.err.print("Error :: división por 0\n");
+			System.err.println("Error :: división por 0");
 			capturaDatos.nextLine();
 			cleanConsole();
 		} 
