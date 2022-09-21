@@ -6,7 +6,9 @@ public class Start {
 	protected static Scanner capturaDatos = new Scanner(System.in); 
 	protected static int option;
 	protected static Float a,b,c;
+	protected static String d;
 	protected static Float resultado;
+	protected static Boolean res;
 	
     public static void main(String[] args) {
 	/*
@@ -62,7 +64,7 @@ public class Start {
 				a = captureNumber("primer", "sumar");
 				b = captureNumber("segundo", "sumar");
 				resultado = suma(a, b);
-				getResult("suma", resultado);
+				getResult("suma", resultado, null);
 				cleanConsole();
 				break;
 			case 2: // RESTAR
@@ -70,7 +72,7 @@ public class Start {
 				a = captureNumber("primer", "restar");
 				b = captureNumber("segundo", "restar");
 				resultado = resta(a, b);
-				getResult("resta", resultado);
+				getResult("resta", resultado, null);
 				cleanConsole();
 				break;
 			case 3: // MULTIPLICAR
@@ -78,7 +80,7 @@ public class Start {
 				a = captureNumber("primer", "multiplicar");
 				b = captureNumber("segundo", "multiplicar");
 				resultado = multiplica(a, b);
-				getResult("multiplicación", resultado);
+				getResult("multiplicación", resultado, null);
 				cleanConsole();
 				break;
 			case 4: // DIVIDIR
@@ -86,7 +88,7 @@ public class Start {
 				a = captureNumber("primer", "dividir");
 				b = captureNumber("segundo", "dividir");
 				resultado = divide(a, b);
-				getResult("división", resultado);
+				getResult("división", resultado, null);
 				cleanConsole();
 				break;
 			case 5: // MAYOR DE 3 NUMEROS
@@ -95,11 +97,14 @@ public class Start {
 				b = captureNumber("segundo", "evaluar");
 				c = captureNumber("tercer", "evaluar");
 				resultado = evaluaNumeroMayor(a, b, c);
-				getResult("mayorde3", resultado);
+				getResult("mayorde3", resultado, null);
 				cleanConsole();
 				break;
 			case 6: // CAPICUA
-				System.out.println("A evaluar número! ");
+				//System.out.println("A evaluar número! ");
+				d = captureCapicua();
+				res = capicua(d);
+				getResult("capicua", null, res);
 				cleanConsole();
 				break;
 			default: // OTRO 
@@ -120,15 +125,34 @@ public class Start {
 	
 	public static Float captureNumber(String chance, String operation) {
 		Float number;
+		
 		System.out.print("Introduzca el "+ chance +" número flotante a "+ operation +": ");
 		number = capturaDatos.nextFloat();
+
 		return number;
 	}
 	
-	public static void getResult(String operation, Float res) {
+	public static String captureCapicua() {
+		String number;
+		
+		System.out.print("Introduzca un número para saber si es capicúa: ");
+		number = capturaDatos.next();
+
+		return number;
+	}
+	
+	public static void getResult(String operation, Float res, Boolean capi) {
 		if (operation == "mayorde3") {
 			System.out.println("El número "+ res +" es el mayor de los 3 números\n");
 			capturaDatos.nextLine();
+		} else if (operation == "capicua" && capi != null) {
+			if (capi == true) {
+				System.out.println("SI es capicúa\n");
+				capturaDatos.nextLine();
+			} else {
+				System.out.println("NO es capicúa\n");
+				capturaDatos.nextLine();
+			}
 		} else {
 			System.out.println(" La "+ operation +" de "+ a.toString() +" y "+ b.toString() + " es: "+ res.toString()+"\n");
 			capturaDatos.nextLine();
@@ -185,9 +209,21 @@ public class Start {
 		return 0.0f;
 	}
 	
-	public static void capicua(int n) {
+	public static Boolean capicua(String n) {
 	/*
 	 * Método para evaluar un string capicua
 	 */
+		String reverse = "";
+		
+		for (int i = n.length() -1; i >= 0; i--) {
+			reverse = reverse + n.charAt(i);
+		}
+		
+		if (reverse.equalsIgnoreCase(n)) {
+			return true;
+		} else {
+			return false;
+		}
+		
 	}
 }
