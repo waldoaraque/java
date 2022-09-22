@@ -39,7 +39,7 @@ public class Start {
     /*
      * Función para validar rango de hora
      */
-		if (hora <= 23) {
+		if (hora <= 23 && hora >= 0) {
 			return true;
 		} else {
 			return false;
@@ -51,7 +51,7 @@ public class Start {
     /*
      * Función para validar rango de minutos y segundos
      */
-		if (min <= 59 || seg <= 59 ) {
+		if (min <= 59 && min >= 0 || seg <= 59 && seg >= 0 ) {
 			return true;
 		} else {
 			return false;
