@@ -5,7 +5,7 @@
                             
                Reto 1 - Validación de Horas, Minutos y Segundos
 							 
-							 21/09/2022
+							 22/09/2022
 *******************************************************************************/
 import java.util.Scanner;
 
@@ -39,31 +39,24 @@ public class Start {
     /*
      * Función para validar rango de hora
      */
+		if (hora <= 23) {
+			return true;
+		} else {
+			return false;
+		}
     	
-    	for (int i = 0; i <= 23; i++) {
-    		if (hora == i) {
-    			return true;
-    		} else {
-    			continue;
-    		}
-    	}
-    	
-    	return false;
     }
     
     public static Boolean validaMinSeg(int min, int seg) {
     /*
      * Función para validar rango de minutos y segundos
      */
-    	for (int i = 0; i <= 59; i++) {
-    		if (min == i || seg == i) {
-    			return true;
-    		} else {
-    			continue;
-    		}
-    		
-    	}
-    	return false;
+		if (min <= 59 || seg <= 59 ) {
+			return true;
+		} else {
+			return false;
+		}
+		
     }
 	
 }
