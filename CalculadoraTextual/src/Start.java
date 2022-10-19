@@ -5,18 +5,15 @@
                             
                		Ejercicio Evaluativo - Calculadora
 							 
-							 21/09/2022
+							 19/10/2022
 *******************************************************************************/
 import java.util.Scanner;
 
 public class Start {
     
-	protected static Scanner capturaDatos = new Scanner(System.in); 
-	protected static int option;
-	protected static Float a,b,c;
-	protected static String d;
-	protected static Float resultado;
-	protected static Boolean res;
+	protected static final Scanner capturaDatos = new Scanner(System.in); 
+	protected static int option = 0;
+	protected static Float a = 0.0f, b = 0.0f, c = 0.0f, resultado = 0.0f;
 	
     public static void main(String[] args) {
 	/*
@@ -51,7 +48,7 @@ public class Start {
 			System.out.println("     3. Multiplicar               ");
 			System.out.println("     4. Dividir                   ");
 			System.out.println("     5. Número mayor de 3 números ");
-			System.out.println("     6. Capicua                   ");
+			System.out.println("     6. Factorial                 ");
 			System.out.println("     0. Salir                    \n");
 			
 			System.out.print("Introduzca una opción: ");
@@ -75,51 +72,66 @@ public class Start {
 		    	break;
 			case 1: // SUMAR
 				
-				//System.out.println("A sumar! ");
-				a = captureNumber("primer", "sumar");
-				b = captureNumber("segundo", "sumar");
+				System.out.println("Introduzca el primer número flotante a sumar: ");
+				a = capturaDatos.nextFloat();
+				System.out.println("Introduzca el segundo número flotante a sumar: ");
+				b = capturaDatos.nextFloat();
 				resultado = suma(a, b);
-				getResult("suma", resultado, null);
+				System.out.println("La suma de "+ a +" y "+ b +" es "+ resultado);
+				capturaDatos.nextLine();
 				cleanConsole();
 				break;
 			case 2: // RESTAR
-				//System.out.println("A restar! ");
-				a = captureNumber("primer", "restar");
-				b = captureNumber("segundo", "restar");
+				System.out.println("Introduzca el primer número flotante a restar: ");
+				a = capturaDatos.nextFloat();
+				System.out.println("Introduzca el segundo número flotante a restar: ");
+				b = capturaDatos.nextFloat();
 				resultado = resta(a, b);
-				getResult("resta", resultado, null);
+				System.out.println("La resta de "+ a +" y "+ b +" es "+ resultado);
+				capturaDatos.nextLine();
 				cleanConsole();
 				break;
 			case 3: // MULTIPLICAR
-				//System.out.println("A multiplicar! ");
-				a = captureNumber("primer", "multiplicar");
-				b = captureNumber("segundo", "multiplicar");
+				System.out.println("Introduzca el primer número flotante a multiplicar: ");
+				a = capturaDatos.nextFloat();
+				System.out.println("Introduzca el segundo número flotante a multiplicar: ");
+				b = capturaDatos.nextFloat();
 				resultado = multiplica(a, b);
-				getResult("multiplicación", resultado, null);
+				System.out.println("La multiplicación de "+ a +" y "+ b +" es "+ resultado);
+				capturaDatos.nextLine();
 				cleanConsole();
 				break;
 			case 4: // DIVIDIR
-				//System.out.println("A dividir! ");
-				a = captureNumber("primer", "dividir");
-				b = captureNumber("segundo", "dividir");
+				System.out.println("Introduzca el primer número flotante a dividir: ");
+				a = capturaDatos.nextFloat();
+				System.out.println("Introduzca el segundo número flotante a dividir: ");
+				b = capturaDatos.nextFloat();
 				resultado = divide(a, b);
-				getResult("división", resultado, null);
+				System.out.println("La división de "+ a +" y "+ b +" es "+ resultado);
+				capturaDatos.nextLine();
 				cleanConsole();
 				break;
 			case 5: // MAYOR DE 3 NUMEROS
-				//System.out.println("A calcular número mayor! ");
-				a = captureNumber("primer", "evaluar");
-				b = captureNumber("segundo", "evaluar");
-				c = captureNumber("tercer", "evaluar");
+				System.out.println("A calcular número mayor! ");
+				System.out.println("Introduzca el primer número flotante de los 3: ");
+				a = capturaDatos.nextFloat();
+				System.out.println("Introduzca el segundo número flotante de los 3: ");
+				b = capturaDatos.nextFloat();
+				System.out.println("Introduzca el tercer número flotante de los 3: ");
+				c = capturaDatos.nextFloat();
 				resultado = evaluaNumeroMayor(a, b, c);
-				getResult("mayorde3", resultado, null);
+				System.out.println("La número "+ resultado + " es el mayor de los 3 números");
+				capturaDatos.nextLine();
 				cleanConsole();
 				break;
-			case 6: // CAPICUA
-				//System.out.println("A evaluar número! ");
-				d = captureCapicua();
-				res = capicua(d);
-				getResult("capicua", null, res);
+			case 6: // FACTORIAL
+				int num = 0; 
+				int res = 0;
+				System.out.println("Introduzca el número para calcular el factorial: ");
+				num = capturaDatos.nextInt();
+				res = factorial(num);
+				System.out.println("El factorial de "+ num +" es "+ res);
+				capturaDatos.nextLine();
 				cleanConsole();
 				break;
 			default: // OTRO 
@@ -138,59 +150,11 @@ public class Start {
 		handler();
 	}
 	
-	public static Float captureNumber(String chance, String operation) {
-		Float number = 0f;
-		try {
-			System.out.print("Introduzca el "+ chance +" número flotante a "+ operation +": ");
-			number = capturaDatos.nextFloat();
-		} catch (Exception e) {
-			System.err.println("Error :: no se han capturado los datos esperados");
-			capturaDatos.nextLine();
-			cleanConsole();
-		}
-		
-
-		return number;
-	}
-	
-	public static String captureCapicua() {
-		String number = "";
-		
-		try {
-			System.out.print("Introduzca un número para saber si es capicúa: ");
-			number = capturaDatos.next("[0-9]+"); // [0-9]+ patrón de regEx(solo números)
-		} catch (Exception e) {
-			System.err.println("Error :: no se han capturado los datos esperados");
-			capturaDatos.nextLine();
-			cleanConsole();
-		}
-		
-		return number;
-	}
-	
-	public static void getResult(String operation, Float res, Boolean capi) {
-		if (operation == "mayorde3") {
-			System.out.println("El número "+ res +" es el mayor de los 3 números\n");
-			capturaDatos.nextLine();
-		} else if (operation == "capicua" && capi != null) {
-			if (capi == true) {
-				System.out.println("SI es capicúa\n");
-				capturaDatos.nextLine();
-			} else {
-				System.out.println("NO es capicúa\n");
-				capturaDatos.nextLine();
-			}
-		} else {
-			System.out.println(" La "+ operation +" de "+ a.toString() +" y "+ b.toString() + " es: "+ res.toString()+"\n");
-			capturaDatos.nextLine();
-		}
-	}
-	
 	public static Float suma(Float x, Float y) {
-		/*
-		 * Método para sumar
-		 */
-			return x + y;
+	/*
+	 * Método para sumar
+	 */
+		return x + y;
 			
 	}
 		
@@ -236,21 +200,20 @@ public class Start {
 		return 0.0f;
 	}
 	
-	public static Boolean capicua(String n) {
+	public static int factorial(int n) {
 	/*
-	 * Método para evaluar un string capicua
+	 * Método para sacar el factorial de un número mayor que 0
 	 */
-		String reverse = "";
-		
-		for (int i = n.length() -1; i >= 0; i--) {
-			reverse = reverse + n.charAt(i);
-		}
-		
-		if (reverse.equalsIgnoreCase(n)) {
-			return true;
+		if(n > 0) {
+			for(int i = n -1; i > 0; i--) {
+				n = n * i;
+			}
+			return n;
 		} else {
-			return false;
+			System.err.println("Error :: valor inferior a 0, introduzca un valor superior a 0");
+			capturaDatos.nextLine();
+			cleanConsole();
+			return 0;
 		}
-		
 	}
 }
