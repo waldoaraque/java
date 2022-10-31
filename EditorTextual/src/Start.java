@@ -1,7 +1,10 @@
 import java.util.Scanner;
 import java.io.File;
+import java.io.IOException; 
+import java.io.FileWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.io.FileNotFoundException;
 
 
 public class Start {
@@ -9,9 +12,10 @@ public class Start {
 	protected static final Scanner capturaDatos = new Scanner(System.in); 
 	protected static final String workdir = System.getProperty("user.dir");
 	protected static int option = 0;
-	protected static File file;
-	protected static String fileName, miniOption;
-	
+	protected static File file = null;
+	protected static FileWriter fileWriter = null;
+	protected static String fileName = null, miniOption = null;
+
 	public static void main(String[] args) {
 	/*
 	 * Ejecución del programa
@@ -79,9 +83,12 @@ public class Start {
 			case 2: // EDITAR FICHERO
 				System.out.println("Introduzca el nombre del fichero a editar: ");
 				fileName = capturaDatos.next();
-				updateFile(fileName);
+				try {
+					updateFile(fileName);
+				} catch(FileNotFoundException e) {
+					System.err.println("Error:: Ha ocurrido un error ejecutando la edición de fichero");
+				}
 				
-				capturaDatos.nextLine();
 				cleanConsole();
 				break;
 			case 3: // BORRAR FICHERO
@@ -141,28 +148,65 @@ public class Start {
 			miniOption = capturaDatos.next("(Si|No)$");
 			
 			if(miniOption.startsWith("Si")) {
-				System.out.println("creating filesystemccsadsfa");
-				//return file;
+				try {
+					fileWriter = new FileWriter(file);
+					fileWriter.write("");
+					fileWriter.close();
+				} catch(IOException e) {
+					System.err.println("Error:: Ha ocurrido un problema creando el fichero.");
+					capturaDatos.nextLine();
+					cleanConsole();
+				}
 			} else {
 				cleanConsole();
 			}
 		} else {
-			System.out.println("nuevo file");
+			try {
+				file.getParentFile().mkdirs();
+				file.createNewFile();
+			} catch(Exception e) {
+				System.err.println("Error:: Ha ocurrido un problema creando el fichero.");
+				capturaDatos.nextLine();
+				cleanConsole();
+			}
 		}
 	}
 	
-	public static void updateFile(String fileName) {
+	public static void updateFile(String fileName) throws FileNotFoundException {
 	/*
 	 * Método para actualizar fichero
 	 */
 		Path path = Paths.get(workdir, fileName);
-		
+		String oldData = null;
 		file = new File(path.toString());
+		Long fileTime = file.lastModified();
+		Scanner reader = new Scanner(file);
+		
 		if(file.exists()) {
-			System.out.println("Introduzca el texto que desea añadir al fichero: ");
-			miniOption = capturaDatos.next();
-			// añadir al final del fichero el texto
-			//System.out.println("Documento editado correctamente.");
+			
+			try {
+				
+				while(reader.hasNextLine()) {
+					oldData = reader.nextLine();
+				}
+				reader.close();
+				System.out.print("Introduzca el texto que desea añadir al fichero: ");
+				miniOption = capturaDatos.nextLine();
+				miniOption = capturaDatos.nextLine(); // duda sobre esto...
+				
+				fileWriter = new FileWriter(file);
+				fileWriter.write(oldData +" "+ miniOption);
+				fileWriter.close();
+				
+				if(fileTime < file.lastModified()) {
+					System.out.println("Documento editado correctamente.");
+				}
+				
+			} catch(IOException e) {
+				System.err.println("Error:: Ha ocurrido un problema creando el fichero.");
+				capturaDatos.nextLine();
+				cleanConsole();
+			}
 		} else {
 			System.out.println("Fichero inexistente");
 			capturaDatos.nextLine();
@@ -189,7 +233,7 @@ public class Start {
 					capturaDatos.nextLine();
 					cleanConsole();
 				}	
-			} catch (Exception e) { //Capturamos excepción por si el usuario ingresa cualquier cosa
+			} catch(Exception e) { //Capturamos excepción por si el usuario ingresa cualquier cosa
 				System.out.println("El fichero no se borró del sistema.");
 				capturaDatos.nextLine();
 				cleanConsole();
