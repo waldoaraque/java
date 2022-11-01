@@ -102,17 +102,14 @@ public class Start {
 			case 4: // CREAR CARPETA
 				System.out.println("Introduzca el nombre de la carpeta a crear: ");
 				fileName = capturaDatos.next();
-				
-				
-				System.out.println("carpeta creada...");
+				createDir(fileName);
 				capturaDatos.nextLine();
 				cleanConsole();
 				break;
 			case 5: // BORRAR CARPETA
 				System.out.println("Introduzca el nombre de la carpeta a borrar: ");
-				
-				
-				System.out.println("carpeta borrada...");
+				fileName = capturaDatos.next();
+				deleteDir(fileName);
 				capturaDatos.nextLine();
 				cleanConsole();
 				break;
@@ -143,7 +140,7 @@ public class Start {
 		
 		file = new File(path.toString());
 		
-		if(file.exists()) {
+		if(file.exists() && file.isFile()) {
 			System.out.println("Fichero existente ¿Desea sobrescribirlo?");
 			miniOption = capturaDatos.next("(Si|No)$");
 			
@@ -152,6 +149,7 @@ public class Start {
 					fileWriter = new FileWriter(file);
 					fileWriter.write("");
 					fileWriter.close();
+					System.out.println("Fichero creado correctamente.");
 				} catch(IOException e) {
 					System.err.println("Error:: Ha ocurrido un problema creando el fichero.");
 					capturaDatos.nextLine();
@@ -182,7 +180,7 @@ public class Start {
 		Long fileTime = file.lastModified();
 		Scanner reader = new Scanner(file);
 		
-		if(file.exists()) {
+		if(file.exists() && file.isFile()) {
 			
 			try {
 				
@@ -221,13 +219,13 @@ public class Start {
 		Path path = Paths.get(workdir, fileName);
 		
 		file = new File(path.toString());
-		if(file.exists()) {
+		if(file.exists() && file.isFile()) {
 			System.out.println("¿Estás seguro de que deseas borrarlo (Afirmación S)?");
 			try {
 				miniOption = capturaDatos.next("(S|s)$");
-				if(miniOption.contentEquals("S")) {
-					System.out.println(miniOption);
-					// eliminar fichero
+				if(miniOption.contentEquals("S") || miniOption.contentEquals("s")) {
+					file.delete();
+					System.out.println("Fichero eliminado correctamente.");
 				} else {
 					System.out.println("El fichero no se borró del sistema.");
 					capturaDatos.nextLine();
@@ -240,6 +238,57 @@ public class Start {
 			}
 		} else {
 			System.out.println("Fichero inexistente");
+			capturaDatos.nextLine();
+			cleanConsole();
+		}
+	}
+	
+	public static void createDir(String fileName) {
+	/*
+	 * Método para crear carpetas
+	 */
+		Path path = Paths.get(workdir, fileName);
+		
+		file = new File(path.toString());
+		if(file.exists() && file.isDirectory()) {
+			System.out.println("Carpeta ya existente.");
+			capturaDatos.nextLine();
+			cleanConsole();
+		} else {
+			file.mkdirs();
+			System.out.println("Carpeta creada correctamente.");
+		}
+	}
+	
+	public static void deleteDir(String fileName) {
+	/*
+	 * Método para borrar carpetas
+	 */
+		Path path = Paths.get(workdir, fileName);
+		
+		file = new File(path.toString());
+		if(file.exists() && file.isDirectory()) {
+			System.out.println("¿Estás seguro de que deseas borrar la carpeta (Afirmación S)?");
+			try {
+				miniOption = capturaDatos.next("(S|s)$");
+				if(miniOption.contentEquals("S") || miniOption.contentEquals("s")) {
+					for(File subfile: file.listFiles()) {
+						subfile.delete();
+					}
+					file.delete();
+					System.out.println("Carpeta borrada correctamente.");
+				} else {
+					System.out.println("La carpeta no se borró del sistema.");
+					capturaDatos.nextLine();
+					cleanConsole();
+				}	
+			} catch(Exception e) { //Capturamos excepción por si el usuario ingresa cualquier cosa
+				System.out.println("La carpeta no se borró del sistema.");
+				capturaDatos.nextLine();
+				cleanConsole();
+			}
+		} else {
+			System.out.println("La carpeta no existe.");
 			capturaDatos.nextLine();
 			cleanConsole();
 		}
