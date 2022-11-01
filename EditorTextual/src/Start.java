@@ -1,3 +1,13 @@
+/******************************************************************************
+                    IFP Desarrollo de Aplicaciones Web
+                    1er Ciclo - Programación A
+                            Waldo Araque
+                            
+               		Ejercicio Evaluativo - Editor de Texto
+							 
+							 02/11/2022
+*******************************************************************************/
+
 import java.util.Scanner;
 import java.io.File;
 import java.io.IOException; 
