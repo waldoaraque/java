@@ -185,7 +185,7 @@ public class Start {
 	 * Método para actualizar fichero
 	 */
 		Path path = Paths.get(workdir, fileName);
-		String oldData = null;
+		String oldData = "";
 		file = new File(path.toString());
 		Long fileTime = file.lastModified();
 		Scanner reader = new Scanner(file);
