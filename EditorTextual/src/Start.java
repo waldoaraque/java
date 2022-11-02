@@ -195,7 +195,7 @@ public class Start {
 			try {
 				
 				while(reader.hasNextLine()) {
-					oldData = reader.nextLine();
+					oldData += reader.nextLine() + "\n";
 				}
 				reader.close();
 				System.out.print("Introduzca el texto que desea añadir al fichero: ");
@@ -203,7 +203,7 @@ public class Start {
 				miniOption = capturaDatos.nextLine(); // duda sobre esto...
 				
 				fileWriter = new FileWriter(file);
-				fileWriter.write(oldData +" "+ miniOption);
+				fileWriter.write(oldData +"\n"+ miniOption);
 				fileWriter.close();
 				
 				if(fileTime < file.lastModified()) {
