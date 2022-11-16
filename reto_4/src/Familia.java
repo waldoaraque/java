@@ -1,23 +1,16 @@
 
-public class Familia {
+public abstract class Familia {
 	//Atributos
 	protected int numeroLibroDeFamilia;
 	protected String direccion;
 	protected String poblacion;
 	protected String provincia;
-	protected Persona padre;
-	protected Persona hermano;
-	protected Persona hermana;
 	
-	
-	public Familia(int numFamilia, String adress, String pob, String provi, Persona father, Persona brother, Persona sister) {
-		this.numeroLibroDeFamilia = numFamilia;
-		this.direccion = adress;
-		this.poblacion = pob;
-		this.provincia = provi;
-		this.padre = father;
-		this.hermano = brother;
-		this.hermana = sister;
+	public Familia() {
+		this.numeroLibroDeFamilia = 17893;
+		this.direccion = "Av. Reyes Católicos, 14, 3A";
+		this.poblacion = "Cuenca";
+		this.provincia = "Cuenca";
 	}
 	
 	public int getNumeroLibroDeFamilia() {
@@ -44,8 +37,5 @@ public class Familia {
 	public void setProvincia(String provincia) {
 		this.provincia = provincia;
 	}
-	public Float imc(Persona person) {
-		return person.peso / person.altura * person.altura;
-	}
-	
+	public abstract Float imc();
 }

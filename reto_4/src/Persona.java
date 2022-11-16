@@ -1,5 +1,5 @@
 
-public class Persona {
+public class Persona extends Familia {
 	//Atributos
 	protected String nombre;
 	protected int edad;
@@ -63,7 +63,18 @@ public class Persona {
 		info = info + "Sexo: "+ this.sexo + "\n";
 		info = info + "Peso: "+ this.peso + "\n";
 		info = info + "Altura: "+ this.altura + "\n";
-		
+		info = info + "Dirección: "+ this.direccion+ "\n";
+		info = info + "Población: "+ this.poblacion + "\n";
+		info = info + "Provincia: "+ this.provincia + "\n";
+		info = info + "El peso ideal es: "+ this.imc() + "\n";
 		return info;
 	}
+
+	@Override
+	public Float imc() {
+		// TODO Auto-generated method stub
+		return this.peso / this.altura * this.altura;
+	}
+	
+	
 }
